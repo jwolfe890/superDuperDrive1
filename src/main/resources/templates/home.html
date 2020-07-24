@@ -11,7 +11,7 @@
     <body class="p-3 mb-2 bg-light text-black">
         <div class="container">
             <div id="logoutDiv">
-                <form action="#" method="POST">
+                <form action="#" th:action="@{/logout}" method="POST">
                     <button type="submit" class="btn btn-secondary float-right">Logout</button>
                 </form>
             </div>
@@ -80,7 +80,20 @@
                                             <button type="button" class="btn btn-success">Edit</button>
                                             <a class="btn btn-danger">Delete</a>
                                         </td>
+
+
+                                        <div th:each="note : ${notes}">
+                                            <span th:text="${note.getNoteTitle()}"></span>
+                                        </div>
+
+
+<!--                                        <h1 th:each="note : ${notes}" th:text="${note.title}"></h1>-->
+
+<!--                                        <th scope="row" th:each="note : ${notes}" th:text="${note.title}"></th>-->
+<!--                                        <h1 th:text="${note.title}"></h1>-->
+
                                         <th scope="row">Example Note Title</th>
+
                                         <td>Example Note Description </td>
                                     </tr>
                                 </tbody>
