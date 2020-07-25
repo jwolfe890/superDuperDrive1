@@ -26,7 +26,7 @@ public class NoteService {
     }
 
     public void addNote(Note note) {
-        noteMapper.insert(new Note(note.getNoteTitle(), note.getNoteDescription()));
+        noteMapper.insert(new Note(null, note.getNoteTitle(), note.getNoteDescription()));
 //        Note newNote = new Note();
 //        newNote.setNoteTitle(note.getNoteTitle());
 //        newNote.setNoteDescription(note.getNoteDescription());

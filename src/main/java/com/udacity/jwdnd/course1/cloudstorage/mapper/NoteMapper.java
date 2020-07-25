@@ -18,6 +18,6 @@ public interface NoteMapper {
     List<Note> getNotes();
 
     @Insert("INSERT INTO NOTES (noteTitle, noteDescription) VALUES(#{noteTitle}, #{noteDescription})")
-    @Options(useGeneratedKeys = true)
+    @Options(useGeneratedKeys = true, keyProperty = "noteId")
     int insert(Note note);
 }

@@ -4,29 +4,24 @@ import org.springframework.lang.Nullable;
 
 public class Note {
 
-    private int noteId;
+    private Integer noteId;
     private String noteTitle;
     private String noteDescription;
 
-    public Note(String noteTitle, String noteDescription, int noteId) {
+    public Note(Integer noteId, String noteTitle, String noteDescription) {
         this.noteId = noteId;
         this.noteTitle = noteTitle;
         this.noteDescription = noteDescription;
     }
 
-    public Note(String noteTitle, String noteDescription) {
-        this.noteTitle = noteTitle;
-        this.noteDescription = noteDescription;
-    }
 
     public Integer getNoteId() {
         return noteId;
     }
 
-    public void setNoteId(int noteId) {
+    public void setNoteId(Integer noteId) {
         this.noteId = noteId;
     }
-
 
     public String getNoteTitle() {
         return noteTitle;
