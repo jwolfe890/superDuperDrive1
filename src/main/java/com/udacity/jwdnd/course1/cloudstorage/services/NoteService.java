@@ -1,6 +1,8 @@
 package com.udacity.jwdnd.course1.cloudstorage.services;
 
+import com.udacity.jwdnd.course1.cloudstorage.mapper.NoteMapper;
 import com.udacity.jwdnd.course1.cloudstorage.model.Note;
+import com.udacity.jwdnd.course1.cloudstorage.model.User;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -10,22 +12,25 @@ import java.util.List;
 @Service
 public class NoteService {
 
-    private List<Note> notes;
+    NoteMapper noteMapper;
 
-
-
-    public List<Note> getNotes() {
-        return notes;
+    public NoteService(NoteMapper noteMapper) {
+        this.noteMapper = noteMapper;
     }
 
-    public void addNote() {
-        Note newNote1 = new Note();
-        newNote1.setNoteTitle("title1");
-        this.notes.add(newNote1);
+    private List<Note> notes;
 
-        Note newNote2 = new Note();
-        newNote2.setNoteTitle("title2");
-        this.notes.add(newNote2);
+    public List<Note> getNotes() {
+//        return notes;
+        return noteMapper.getNotes();
+    }
+
+    public void addNote(Note note) {
+        noteMapper.insert(new Note(note.getNoteTitle(), note.getNoteDescription()));
+//        Note newNote = new Note();
+//        newNote.setNoteTitle(note.getNoteTitle());
+//        newNote.setNoteDescription(note.getNoteDescription());
+//        this.notes.add(newNote);
     }
 
     @PostConstruct

@@ -1,29 +1,48 @@
 package com.udacity.jwdnd.course1.cloudstorage.model;
 
+import org.springframework.lang.Nullable;
+
 public class Note {
 
-    private String title;
-    private String description;
+    private int noteId;
+    private String noteTitle;
+    private String noteDescription;
 
-    public Note() {
-        this.title = title;
-        this.description = description;
+    public Note(String noteTitle, String noteDescription, int noteId) {
+        this.noteId = noteId;
+        this.noteTitle = noteTitle;
+        this.noteDescription = noteDescription;
     }
+
+    public Note(String noteTitle, String noteDescription) {
+        this.noteTitle = noteTitle;
+        this.noteDescription = noteDescription;
+    }
+
+    public Integer getNoteId() {
+        return noteId;
+    }
+
+    public void setNoteId(int noteId) {
+        this.noteId = noteId;
+    }
+
 
     public String getNoteTitle() {
-        return title;
+        return noteTitle;
     }
 
-    public void setNoteTitle(String title) {
-        this.title = title;
+    public void setNoteTitle(String noteTitle) {
+        this.noteTitle = noteTitle;
     }
 
     public String getNoteDescription() {
-        return title;
+        return noteDescription;
     }
 
-    public void setNoteDescription(String description) {
-        this.description = description;
+    public void setNoteDescription(String noteDescription) {
+        this.noteDescription = noteDescription;
     }
+
 
 }

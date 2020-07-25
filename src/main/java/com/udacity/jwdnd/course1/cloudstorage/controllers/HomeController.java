@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -21,10 +22,16 @@ public class HomeController {
 
     @GetMapping()
     public String getHomePage(@ModelAttribute Note note, Model model) {
-        this.noteService.addNote();
         model.addAttribute("notes", this.noteService.getNotes());
         return "home";
     }
+
+//    @PostMapping()
+//    public String postNote(Note note, Model model) {
+//        this.noteService.addNote(note);
+//        model.addAttribute("notes", this.noteService.getNotes());
+//        return "home";
+//    }
 
 
 
