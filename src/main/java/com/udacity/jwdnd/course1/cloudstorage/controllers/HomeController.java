@@ -58,13 +58,8 @@ public class HomeController {
 
     @PostMapping("/file-upload")
     public String uploadFile(@RequestParam("fileUpload") MultipartFile fileUpload, Model model) throws IOException {
-
-//        return userMapper.insert(new User(null, user.getUsername(), encodedSalt, hashedPassword, user.getFirstName(), user.getLastName()));
-//        Files newFile = new Files(fileUpload.getOriginalFilename(), fileUpload.getContentType(), fileUpload.getSize(), fileUpload.getBytes());
-
         fileMapper.insert(new Files(fileUpload.getOriginalFilename(), fileUpload.getContentType(), fileUpload.getSize(), fileUpload.getBytes()));
         model.addAttribute("files", fileMapper.getFiles());
-
         return "home";
     }
 }

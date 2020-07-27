@@ -1,6 +1,7 @@
 package com.udacity.jwdnd.course1.cloudstorage.mapper;
 
 import com.udacity.jwdnd.course1.cloudstorage.model.Files;
+import com.udacity.jwdnd.course1.cloudstorage.model.Note;
 import com.udacity.jwdnd.course1.cloudstorage.model.User;
 import org.apache.ibatis.annotations.*;
 
@@ -14,9 +15,6 @@ public interface FileMapper {
             "(#{file.fileName}, #{file.contentType}, #{file.fileSize}, #{file.fileData})")
     @Options(useGeneratedKeys = true, keyProperty = "fileId")
     int insert(@Param("file") Files file);
-
-//    @Select("SELECT * FROM FILES WHERE userid = #{userId}")
-//    List<Files> findFilesByUserId(@Param("userId") Integer userId);
 
     @Select("SELECT * FROM FILES")
     List<Files> getFiles();
