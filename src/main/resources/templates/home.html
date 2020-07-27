@@ -25,7 +25,7 @@
                 </nav>
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="nav-files" role="tabpanel" aria-labelledby="nav-files-tab">
-                        <form action="#" enctype="multipart/form-data" method="POST">
+                        <form th:action="@{/file-upload}" enctype="multipart/form-data" method="POST">
                             <div class="container">
                                 <div class="row" style="margin: 1em;">
                                     <div class="col-sm-2">
@@ -74,16 +74,20 @@
                                         <th style="width: 60%" scope="col">Description</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr th:each="note : ${notes}">
-                                        <td>
-                                            <button type="button" class="btn btn-success">Edit</button>
-<!--                                            <a th:href="@{/delete/{note.noteId}}" class="btn btn-danger">Delete</a>-->
-                                        </td>
-                                        <th scope="row" th:text="${note.noteTitle}"></th>
-                                        <td scope="row" th:text="${note.noteDescription}"></td>
-                                    </tr>
-                                </tbody>
+<!--                                <tbody>-->
+<!--                                    <tr th:each="note : ${notes}">-->
+<!--                                        <td>-->
+<!--                                            <button type="button" class="btn btn-success" th:onclick="showNoteModal([[${note}]])">Edit</button>-->
+
+
+
+<!--                                            &lt;!&ndash;                                            <button type="button" class="btn btn-success" onclick="showNoteModal(${note.noteId}, ${note.noteTitle}, ${note.noteDescription})">Edit</button>&ndash;&gt;-->
+<!--                                            <a th:href="@{'/delete/' + ${note.noteId}}" class="btn btn-danger">Delete</a>-->
+<!--                                        </td>-->
+<!--                                        <th scope="row" th:text="${note.noteTitle}"></th>-->
+<!--                                        <td scope="row" th:text="${note.noteDescription}"></td>-->
+<!--                                    </tr>-->
+<!--                                </tbody>-->
                             </table>
                         </div>
 
@@ -96,24 +100,24 @@
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                    <div class="modal-body">
-                                        <form th:object="${note}" action="#" th:action="@{/home}" method="POST">
-                                            <input type="hidden" name="noteId" id="note-id">
-                                            <div class="form-group">
-                                                <label for="note-title" class="col-form-label">Title</label>
-                                                <input type="text" name="title" th:field="*{noteTitle}" class="form-control" id="note-title" maxlength="20" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="note-description" class="col-form-label">Description</label>
-                                                <textarea th:field="*{noteDescription}" class="form-control" name="description" id="note-description" rows="5" maxlength="1000" required></textarea>
-                                            </div>
-                                            <button id="noteSubmit" type="submit" class="d-none"></button>
-                                        </form>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary" onclick="$('#noteSubmit').click();">Save changes</button>
-                                    </div>
+<!--                                    <div class="modal-body">-->
+<!--                                        <form th:object="${note}" action="#" th:action="@{/home}" method="POST">-->
+<!--                                            <input type="hidden" th:field="*{noteId}" name="noteId" id="note-id">-->
+<!--                                            <div class="form-group">-->
+<!--                                                <label for="note-title" class="col-form-label">Title</label>-->
+<!--                                                <input type="text" name="title" th:field="*{noteTitle}" class="form-control" id="note-title" maxlength="20" required>-->
+<!--                                            </div>-->
+<!--                                            <div class="form-group">-->
+<!--                                                <label for="note-description" class="col-form-label">Description</label>-->
+<!--                                                <textarea th:field="*{noteDescription}" class="form-control" name="description" id="note-description" rows="5" maxlength="1000" required></textarea>-->
+<!--                                            </div>-->
+<!--                                            <button id="noteSubmit" type="submit" class="d-none"></button>-->
+<!--                                        </form>-->
+<!--                                    </div>-->
+<!--                                    <div class="modal-footer">-->
+<!--                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
+<!--                                        <button type="button" class="btn btn-primary" onclick="$('#noteSubmit').click();">Save changes</button>-->
+<!--                                    </div>-->
                                 </div>
                             </div>
                         </div>
@@ -192,11 +196,15 @@
 
         <!--For opening the note modal-->
         <script type="text/javascript">
+
             // For opening the note modal
-            function showNoteModal(noteId, noteTitle, noteDescription) {
-                $('#note-id').val(noteId ? noteId : '');
-                $('#note-title').val(noteTitle ? noteTitle : '');
-                $('#note-description').val(noteDescription ? noteDescription : '');
+            function showNoteModal(note) {
+                if (note && note.noteTitle) {
+                    $('#note-id').val(note.noteId ? note.noteId : '');
+                    $('#note-title').val(note.noteTitle ? note.noteTitle : '');
+                    $('#note-description').val(note.noteDescription ? note.noteDescription : '');
+                }
+
                 $('#noteModal').modal('show');
             }
 

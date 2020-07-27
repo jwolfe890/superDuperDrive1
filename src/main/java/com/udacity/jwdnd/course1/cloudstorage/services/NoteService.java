@@ -21,16 +21,19 @@ public class NoteService {
     private List<Note> notes;
 
     public List<Note> getNotes() {
-//        return notes;
         return noteMapper.getNotes();
     }
 
     public void addNote(Note note) {
-        noteMapper.insert(new Note(null, note.getNoteTitle(), note.getNoteDescription()));
-//        Note newNote = new Note();
-//        newNote.setNoteTitle(note.getNoteTitle());
-//        newNote.setNoteDescription(note.getNoteDescription());
-//        this.notes.add(newNote);
+        if (note.getNoteId() != null) {
+            noteMapper.update(new Note(note.getNoteId(), note.getNoteTitle(), note.getNoteDescription()));
+        } else {
+            noteMapper.insert(new Note(null, note.getNoteTitle(), note.getNoteDescription()));
+        }
+    }
+
+    public void deleteNote(Integer noteId) {
+        noteMapper.delete(noteId);
     }
 
     @PostConstruct

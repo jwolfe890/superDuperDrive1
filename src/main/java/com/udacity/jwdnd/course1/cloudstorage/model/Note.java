@@ -14,7 +14,6 @@ public class Note {
         this.noteDescription = noteDescription;
     }
 
-
     public Integer getNoteId() {
         return noteId;
     }

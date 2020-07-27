@@ -8,11 +8,13 @@ import java.util.List;
 
 @Mapper
 public interface NoteMapper {
-//    @Select("SELECT * FROM USERS WHERE username = #{username}")
-//    Note getNote(String note);
 
     @Delete("DELETE FROM NOTES WHERE noteId = #{noteId}")
-    Note deleteNote(int noteId);
+    void delete(Integer noteId);
+
+    @Update("UPDATE NOTES SET noteTitle = #{noteTitle}, noteDescription = #{noteDescription} WHERE noteId = #{noteId}")
+    @Options(useGeneratedKeys = true, keyProperty = "noteId")
+    Integer update(Note note);
 
     @Select("SELECT * FROM NOTES")
     List<Note> getNotes();
