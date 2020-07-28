@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.sql.Blob;
 import java.util.Arrays;
+import java.util.List;
 
 @Controller
 public class HomeController {
@@ -24,12 +26,11 @@ public class HomeController {
     @Autowired
     NoteService noteService;
 
-    @Autowired
     FileMapper fileMapper;
 
-//    public HomeController(NoteService noteService) {
-//        this.noteService = noteService;
-//    }
+    public HomeController(FileMapper fileMapper) {
+        this.fileMapper = fileMapper;
+    }
 
 //    @GetMapping("/home")
 //    public String getHomePage(@ModelAttribute Note note, Model model) {
@@ -58,8 +59,16 @@ public class HomeController {
 
     @PostMapping("/file-upload")
     public String uploadFile(@RequestParam("fileUpload") MultipartFile fileUpload, Model model) throws IOException {
-        fileMapper.insert(new Files(fileUpload.getOriginalFilename(), fileUpload.getContentType(), fileUpload.getSize(), fileUpload.getBytes()));
+        fileMapper.insert(new Files(null, fileUpload.getOriginalFilename(), fileUpload.getContentType(), fileUpload.getSize(), fileUpload.getBytes()));
         model.addAttribute("files", fileMapper.getFiles());
+        return "home";
+    }
+
+    @GetMapping("/download")
+    public String downloadFile() {
+        List<Files> files = fileMapper.getFiles();
+        Files newFile = files.get(0);
+        byte[] downloadedFile = newFile.getFileData();
         return "home";
     }
 }

@@ -46,16 +46,17 @@
                                 <thead>
                                     <tr>
                                         <th style="width: 20%" scope="col"></th>
-                                        <th style="width: 80%" scope="col" th:text="${file.fileName}">File Name</th>
+                                        <th style="width: 80%" scope="col">File Name</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 <tr>
                                     <td>
-                                        <a target="_blank" class="btn btn-success">View</a>
+<!--                                        <a th:href="@{'/download/' + ${file.fileId}}" target="_blank" class="btn btn-success">View</a>-->
+                                        <a th:href="@{'/download'}" target="_blank" class="btn btn-success">View</a>
                                         <a  class="btn btn-danger">Delete</a>
                                     </td>
-                                    <th scope="row">ExampleFile.txt</th>
+                                    <th th:text="${file.fileName}" scope="row"></th>
                                 </tr>
                                 </tbody>
                             </table>

@@ -1,17 +1,26 @@
 package com.udacity.jwdnd.course1.cloudstorage.model;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Lob;
+import javax.persistence.Table;
 
-import java.sql.Blob;
-
+@Entity
+@Table(name = "Files")
 public class Files {
 
+//    private Integer userId;
     private Integer fileId;
     private String fileName;
     private String contentType;
     private Long fileSize;
+
+    @Lob
+    @Column(name = "fileData", columnDefinition="BLOB")
     private byte[] fileData;
 
 
-    public Files(String fileName, String contentType, Long fileSize, byte[] fileData) {
+    public Files(Integer fileId, String fileName, String contentType, Long fileSize, byte[] fileData) {
+        this.fileId = fileId;
         this.fileName = fileName;
         this.contentType = contentType;
         this.fileSize = fileSize;
