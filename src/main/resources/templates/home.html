@@ -53,7 +53,7 @@
                                 <tr>
                                     <td>
 <!--                                        <a th:href="@{'/download/' + ${file.fileId}}" target="_blank" class="btn btn-success">View</a>-->
-                                        <a th:href="@{'/download'}" target="_blank" class="btn btn-success">View</a>
+                                        <a th:href="@{'/download/' + ${file.fileId}}" target="_blank" class="btn btn-success">View</a>
                                         <a  class="btn btn-danger">Delete</a>
                                     </td>
                                     <th th:text="${file.fileName}" scope="row"></th>
@@ -104,7 +104,7 @@
                                         </button>
                                     </div>
 <!--                                    <div class="modal-body">-->
-<!--                                        <form th:object="${note}" action="#" th:action="@{/home}" method="POST">-->
+<!--                                        <form th:object="${note}" action="#" th:action="@{/createNote}" method="POST">-->
 <!--                                            <input type="hidden" th:field="*{noteId}" name="noteId" id="note-id">-->
 <!--                                            <div class="form-group">-->
 <!--                                                <label for="note-title" class="col-form-label">Title</label>-->

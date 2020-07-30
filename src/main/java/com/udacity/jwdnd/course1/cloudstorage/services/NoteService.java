@@ -28,6 +28,8 @@ public class NoteService {
         if (note.getNoteId() != null) {
             noteMapper.update(new Note(note.getNoteId(), note.getNoteTitle(), note.getNoteDescription()));
         } else {
+//            should try to change this functionality by passing the params to the mapper directly
+//                    and declaring a param inside the mapper
             noteMapper.insert(new Note(null, note.getNoteTitle(), note.getNoteDescription()));
         }
     }

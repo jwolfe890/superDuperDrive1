@@ -16,7 +16,7 @@ public class NoteController {
         this.noteService = noteService;
     }
 
-    @PostMapping("/home")
+    @PostMapping("/createNote")
     public String postNote(Note note, Model model) {
         this.noteService.addNote(note);
         model.addAttribute("notes", this.noteService.getNotes());
