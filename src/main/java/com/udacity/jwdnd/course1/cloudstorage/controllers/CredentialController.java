@@ -4,23 +4,38 @@ import com.udacity.jwdnd.course1.cloudstorage.model.Credentials;
 import com.udacity.jwdnd.course1.cloudstorage.model.Note;
 import com.udacity.jwdnd.course1.cloudstorage.services.CredentialService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+@Controller
 public class CredentialController {
 
     @Autowired
     CredentialService credentialService;
 
-    @PostMapping("/createCredential")
-    public String addCredential(Credentials credential, Model model) {
-        this.credentialService.addCredential(credential);
-        model.addAttribute("credentials", this.credentialService.getCredentials());
+    @PostMapping("/create-credential")
+    public String addCredential(
+    @RequestParam("credentialId") Integer credentialId,
+            @RequestParam("url") String credentialUrl,
+            @RequestParam("username") String credentialUsername,
+            @RequestParam("password") String credentialPassword,
+            Model model) throws IOException {
+
+
+
+
+        System.out.println("hello world2");
+
+//        this.credentialService.addCredential(credential);
+//        model.addAttribute("credentials", this.credentialService.getCredentials());
         return "home";
     }
 

@@ -17,8 +17,8 @@ public class HomeController {
     FileMapper fileMapper;
 
     @GetMapping("/home")
-    public String getHomePage(Model model) {
-        model.addAttribute("notes", this.noteService.getNotes());
+    public String getHomePage() {
+//        model.addAttribute("notes", this.noteService.getNotes());
         return "home";
     }
 
