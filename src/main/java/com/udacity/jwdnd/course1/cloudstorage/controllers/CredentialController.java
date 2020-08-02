@@ -30,11 +30,7 @@ public class CredentialController {
             Model model) throws IOException {
 
 
-
-
-        System.out.println("hello world2");
-
-//        this.credentialService.addCredential(credential);
+        this.credentialService.addCredential(credentialUrl, credentialUsername, credentialPassword);
 //        model.addAttribute("credentials", this.credentialService.getCredentials());
         return "home";
     }
