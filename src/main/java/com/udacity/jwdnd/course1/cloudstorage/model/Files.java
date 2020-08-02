@@ -18,7 +18,6 @@ public class Files {
     @Column(name = "fileData", columnDefinition="BLOB")
     private byte[] fileData;
 
-
     public Files(Integer fileId, String fileName, String contentType, Long fileSize, byte[] fileData) {
         this.fileId = fileId;
         this.fileName = fileName;

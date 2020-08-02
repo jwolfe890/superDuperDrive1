@@ -3,6 +3,7 @@ package com.udacity.jwdnd.course1.cloudstorage.services;
 import com.udacity.jwdnd.course1.cloudstorage.mapper.NoteMapper;
 import com.udacity.jwdnd.course1.cloudstorage.model.Note;
 import com.udacity.jwdnd.course1.cloudstorage.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -12,11 +13,8 @@ import java.util.List;
 @Service
 public class NoteService {
 
+    @Autowired
     NoteMapper noteMapper;
-
-    public NoteService(NoteMapper noteMapper) {
-        this.noteMapper = noteMapper;
-    }
 
     private List<Note> notes;
 
@@ -24,13 +22,15 @@ public class NoteService {
         return noteMapper.getNotes();
     }
 
-    public void addNote(Note note) {
-        if (note.getNoteId() != null) {
-            noteMapper.update(new Note(note.getNoteId(), note.getNoteTitle(), note.getNoteDescription()));
+    public void addNote(Integer noteId, String title, String description) {
+
+        Note newNote = new Note(noteId, title, description);
+
+        if (newNote.getNoteId() != null) {
+            noteMapper.update(newNote);
         } else {
-//            should try to change this functionality by passing the params to the mapper directly
-//                    and declaring a param inside the mapper
-            noteMapper.insert(new Note(null, note.getNoteTitle(), note.getNoteDescription()));
+//           maybe should try to change this functionality by passing the params to the mapper directly and declaring a param inside the mapper
+            noteMapper.insert(newNote);
         }
     }
 

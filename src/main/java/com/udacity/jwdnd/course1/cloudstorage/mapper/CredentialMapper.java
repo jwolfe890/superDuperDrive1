@@ -14,9 +14,6 @@ public interface CredentialMapper {
     @Options(useGeneratedKeys = true, keyProperty = "credentialId")
     Integer insert(@Param("credential") Credentials credential);
 
-//    @Select("SELECT * FROM CREDENTIALS WHERE userid=#{userId}")
-//    List<Credentials> findCredentialsByUserId(@Param("userId") Integer userId);
-
     @Select("SELECT * FROM CREDENTIALS")
     List<Credentials> getCredentials();
 
@@ -29,6 +26,5 @@ public interface CredentialMapper {
 
     @Select("SELECT * FROM CREDENTIALS WHERE credentialId=#{credentialId}")
     Credentials findByCredentialId(@Param("credentialId") Integer credentialId);
-
 
 }

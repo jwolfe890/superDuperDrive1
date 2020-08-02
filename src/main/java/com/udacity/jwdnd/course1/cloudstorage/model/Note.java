@@ -1,7 +1,5 @@
 package com.udacity.jwdnd.course1.cloudstorage.model;
 
-import org.springframework.lang.Nullable;
-
 public class Note {
 
     private Integer noteId;
