@@ -131,7 +131,7 @@
                         </button>
 
                         <div class="table-responsive">
-                            <table class="table table-striped" th:object="${credentials}" id="credentialTable">
+                            <table class="table table-striped" id="credentialTable">
                                 <thead>
                                     <tr>
                                         <th style="width: 20%" scope="col"></th>
@@ -141,14 +141,14 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
+                                <tr th:each="credential : ${credentials}" >
                                     <td>
-                                        <button type="button" class="btn btn-success">Edit</button>
-                                        <a class="btn btn-danger">Delete</a>
+                                        <button type="button" class="btn btn-success" th:onclick="editCredentialModal([[${credential}]])">Edit</button>
+                                        <a th:href="@{'/deleteCredential/' + ${credential.credentialId}}" class="btn btn-danger">Delete</a>
                                     </td>
-                                    <th scope="row">Example Credential URL</th>
-                                    <td>Example Credential Username</td>
-                                    <td>Example Credential Password</td>
+                                    <th th:text="${credential.url}" scope="row"></th>
+                                    <td th:text="${credential.username}"></td>
+                                    <td th:text="${credential.password}"></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -165,8 +165,6 @@
                                     </div>
                                     <div class="modal-body">
                                         <form th:action="@{/create-credential}" method="POST">
-
-                                            <!--                                            th:object="${credential}"-->
                                             <input type="hidden" name="credentialId" id="credential-id">
                                             <div class="form-group">
                                                 <label for="note-title" class="col-form-label">URL</label>
@@ -211,6 +209,22 @@
                 }
 
                 $('#noteModal').modal('show');
+            }
+
+            async function decodePassword(credentialId) {
+                let response = await fetch(`/decodeCredentialPassword/${credentialId}`)
+                let data = await response.json()
+                return data.decryptedPassword;
+            }
+
+            // For opening the credentials modal
+            async function editCredentialModal(credential) {
+                let password = await decodePassword(credential.credentialId);
+                $('#credential-id').val(credential.credentialId ? credential.credentialId : '');
+                $('#credential-url').val(credential.url ? credential.url : '');
+                $('#credential-username').val(credential.username ? credential.username : '');
+                $('#credential-password').val(password ? password : '');
+                $('#credentialModal').modal('show');
             }
 
             // For opening the credentials modal

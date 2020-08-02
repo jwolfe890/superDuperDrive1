@@ -6,6 +6,9 @@ import com.udacity.jwdnd.course1.cloudstorage.model.Note;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.Base64;
 import java.util.List;
@@ -14,7 +17,7 @@ import java.util.List;
 public class CredentialService {
 
     @Autowired
-    HashService hashService;
+    EncryptionService encryptionService;
 
     @Autowired
     CredentialMapper credentialMapper;
@@ -25,7 +28,7 @@ public class CredentialService {
         byte[] key = new byte[16];
         random.nextBytes(key);
         String encodedKey = Base64.getEncoder().encodeToString(key);
-        String encryptedPassword = hashService.getHashedValue(password, encodedKey);
+        String encryptedPassword = encryptionService.encryptValue(password, encodedKey);
 
         Credentials credential = new Credentials(
                 null,

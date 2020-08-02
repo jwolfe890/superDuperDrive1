@@ -37,6 +37,7 @@ public class EncryptionService {
 
         try {
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+
             SecretKey secretKey = new SecretKeySpec(key.getBytes(), "AES");
             cipher.init(Cipher.DECRYPT_MODE, secretKey);
             decryptedValue = cipher.doFinal(Base64.getDecoder().decode(data));
