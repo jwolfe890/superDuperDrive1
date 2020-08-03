@@ -18,14 +18,12 @@ public class NoteService {
 
     private List<Note> notes;
 
-    public List<Note> getNotes() {
-        return noteMapper.getNotes();
+    public List<Note> getNotes(Integer userId) {
+        return noteMapper.getNotes(userId);
     }
 
-    public void addNote(Integer noteId, String title, String description) {
-
-        Note newNote = new Note(noteId, title, description);
-
+    public void addNote(Integer noteId, String title, String description, Integer userId) {
+        Note newNote = new Note(noteId, title, description, userId);
         if (newNote.getNoteId() != null) {
             noteMapper.update(newNote);
         } else {

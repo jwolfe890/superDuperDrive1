@@ -16,10 +16,10 @@ public interface NoteMapper {
     @Update("UPDATE NOTES SET noteTitle = #{note.noteTitle}, noteDescription = #{note.noteDescription} WHERE noteId = #{note.noteId}")
     Integer update(@Param("note") Note note);
 
-    @Select("SELECT * FROM NOTES")
-    List<Note> getNotes();
+    @Select("SELECT * FROM NOTES WHERE userid = #{userId}")
+    List<Note> getNotes(@Param("userId") Integer userId);
 
-    @Insert("INSERT INTO NOTES (noteTitle, noteDescription) VALUES (#{note.noteTitle}, #{note.noteDescription})")
+    @Insert("INSERT INTO NOTES (noteTitle, noteDescription, userId) VALUES (#{note.noteTitle}, #{note.noteDescription}, #{note.userId})")
     @Options(useGeneratedKeys = true, keyProperty = "noteId")
     int insert(@Param("note") Note note);
 
