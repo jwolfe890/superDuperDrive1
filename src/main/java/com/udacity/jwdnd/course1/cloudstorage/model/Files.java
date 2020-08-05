@@ -4,26 +4,31 @@ import javax.persistence.Entity;
 import javax.persistence.Lob;
 import javax.persistence.Table;
 
-@Entity
-@Table(name = "Files")
+//
+//@Entity
+//@Table(name = "Files")
 public class Files {
 
-//    private Integer userId;
+    private Integer userId;
     private Integer fileId;
     private String fileName;
     private String contentType;
     private Long fileSize;
+//    private byte[] fileData;
+
+//    private byte[] fileData;
 
     @Lob
     @Column(name = "fileData", columnDefinition="BLOB")
     private byte[] fileData;
 
-    public Files(Integer fileId, String fileName, String contentType, Long fileSize, byte[] fileData) {
+    public Files(Integer fileId, String fileName, String contentType, Long fileSize, Integer userId, byte[] fileData) {
         this.fileId = fileId;
         this.fileName = fileName;
         this.contentType = contentType;
         this.fileSize = fileSize;
         this.fileData = fileData;
+        this.userId = userId;
     }
 
     public Integer getFileId() {
@@ -66,13 +71,13 @@ public class Files {
         this.fileData = fileData;
     }
 
-//    public Integer getUserId() {
-//        return userId;
-//    }
-//
-//    public void setUserId(Integer userId) {
-//        this.userId = userId;
-//    }
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
 
 
 }

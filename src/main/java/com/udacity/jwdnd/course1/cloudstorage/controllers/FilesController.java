@@ -2,18 +2,19 @@ package com.udacity.jwdnd.course1.cloudstorage.controllers;
 
 import com.udacity.jwdnd.course1.cloudstorage.mapper.FileMapper;
 import com.udacity.jwdnd.course1.cloudstorage.model.Files;
+import com.udacity.jwdnd.course1.cloudstorage.model.Note;
+import com.udacity.jwdnd.course1.cloudstorage.model.User;
 import com.udacity.jwdnd.course1.cloudstorage.services.FileService;
+import com.udacity.jwdnd.course1.cloudstorage.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -28,11 +29,25 @@ public class FilesController {
     @Autowired
     FileService fileService;
 
+    @Autowired
+    UserService userService;
+
     @PostMapping("/file-upload")
-    public String uploadFile(@RequestParam("fileUpload") MultipartFile fileUpload, Model model) throws IOException {
+    public String uploadFile(@RequestParam("fileUpload") MultipartFile fileUpload, Authentication auth, Model model) throws IOException {
+
+        String username = auth.getName();
+        User user = userService.getUser(username);
+        Integer userId = user.getUserId();
+
         try {
-            fileMapper.insert(new Files(null, fileUpload.getOriginalFilename(), fileUpload.getContentType(), fileUpload.getSize(), fileUpload.getBytes()));
-//            model.addAttribute("files", fileMapper.getFiles());
+            fileMapper.insert(new Files(null,
+                    fileUpload.getOriginalFilename(),
+                    fileUpload.getContentType(),
+                    fileUpload.getSize(),
+                    userId,
+                    fileUpload.getBytes()
+            ));
+            model.addAttribute("files", fileMapper.getFiles(userId));
             return "home";
         } catch (Exception e) {
             e.printStackTrace();
@@ -41,15 +56,21 @@ public class FilesController {
     }
 
     @GetMapping("/deleteFile/{fileId}")
-    public String deleteFile(@PathVariable(value = "fileId") Integer fileId, Model model) throws IOException {
-        fileService.deleteFile(fileId);
+    public String deleteNote(@PathVariable(value = "fileId") Integer fileId, @ModelAttribute Files file, Authentication authentication, Model model) {
+        this.fileService.deleteFile(fileId);
+
+        User user = this.userService.getUser(authentication.getName());
+        Integer userId = user.getUserId();
+
+        model.addAttribute("files", this.fileService.getFiles(userId));
         return "home";
     }
 
     @GetMapping("/download/{fileId}")
     public ResponseEntity<Resource> download(@PathVariable("fileId") Integer fileId) {
-        List<Files> files = fileMapper.getFiles();
-        Files file = files.get(0);
+
+        Files file = fileMapper.findById(fileId);
+
         HttpHeaders header = new HttpHeaders();
         header.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename = " + file.getFileName());
         header.add("Cache-control", "no-cache, no-store, must-revalidate");

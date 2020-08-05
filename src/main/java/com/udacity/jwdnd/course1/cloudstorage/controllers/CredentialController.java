@@ -1,8 +1,11 @@
 package com.udacity.jwdnd.course1.cloudstorage.controllers;
 import com.udacity.jwdnd.course1.cloudstorage.mapper.CredentialMapper;
 import com.udacity.jwdnd.course1.cloudstorage.model.Credentials;
+import com.udacity.jwdnd.course1.cloudstorage.model.User;
 import com.udacity.jwdnd.course1.cloudstorage.services.CredentialService;
 import com.udacity.jwdnd.course1.cloudstorage.services.EncryptionService;
+import org.springframework.security.core.Authentication;
+import com.udacity.jwdnd.course1.cloudstorage.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +21,9 @@ public class CredentialController {
     CredentialMapper credentialMapper;
 
     @Autowired
+    UserService userService;
+
+    @Autowired
     CredentialService credentialService;
 
     @Autowired
@@ -29,16 +35,27 @@ public class CredentialController {
             @RequestParam("url") String credentialUrl,
             @RequestParam("username") String credentialUsername,
             @RequestParam("password") String credentialPassword,
-            Model model) throws IOException {
-        this.credentialService.addCredential(credentialId, credentialUrl, credentialUsername, credentialPassword);
-        model.addAttribute("credentials", this.credentialService.getCredentials());
+            Model model,
+            Authentication authentication
+    ) throws IOException {
+
+        User user = this.userService.getUser(authentication.getName());
+        Integer userId = user.getUserId();
+
+        this.credentialService.addCredential(credentialId, credentialUrl, credentialUsername, credentialPassword, userId);
+        model.addAttribute("credentials", this.credentialService.getCredentials(userId));
         return "home";
     }
 
     @GetMapping("/deleteCredential/{credentialId}")
-    public String deleteCredential(@PathVariable(value = "credentialId") Integer credentialId, Model model) {
+    public String deleteCredential(@PathVariable(value = "credentialId") Integer credentialId,
+                                   Model model, Authentication authentication) {
+
+        User user = this.userService.getUser(authentication.getName());
+        Integer userId = user.getUserId();
+
         credentialService.deleteCredential(credentialId);
-        model.addAttribute("credentials", this.credentialService.getCredentials());
+        model.addAttribute("credentials", this.credentialService.getCredentials(userId));
         return "home";
     }
 

@@ -22,7 +22,7 @@ public class CredentialService {
     @Autowired
     CredentialMapper credentialMapper;
 
-    public void addCredential(Integer credentialId, String url, String username, String password) {
+    public void addCredential(Integer credentialId, String url, String username, String password, Integer userId) {
         SecureRandom random = new SecureRandom();
         byte[] key = new byte[16];
         random.nextBytes(key);
@@ -34,7 +34,8 @@ public class CredentialService {
                 url,
                 username,
                 encryptedPassword,
-                encodedKey
+                encodedKey,
+                userId
         );
         if (credentialId != null) {
             credentialMapper.update(credential);
@@ -47,8 +48,8 @@ public class CredentialService {
         credentialMapper.deleteById(credentialId);
     }
 
-    public List<Credentials> getCredentials() {
-        return credentialMapper.getCredentials();
+    public List<Credentials> getCredentials(Integer userId) {
+        return credentialMapper.getCredentials(userId);
     }
 
 }

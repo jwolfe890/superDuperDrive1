@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS NOTES (
     foreign key (userid) references USERS(userid)
 );
 
+
 CREATE TABLE IF NOT EXISTS FILES (
     fileId INT PRIMARY KEY auto_increment,
     filename VARCHAR,

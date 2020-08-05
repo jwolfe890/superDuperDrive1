@@ -9,17 +9,14 @@ import java.util.List;
 public class FileService {
 
     @Autowired
-    EncryptionService encryptionService;
-
-    @Autowired
     FileMapper fileMapper;
 
     public void deleteFile(Integer fileId) {
         fileMapper.deleteById(fileId);
     }
 
-    public List<Files> getFiles() {
-        return fileMapper.getFiles();
+    public List<Files> getFiles(Integer userId) {
+        return fileMapper.getFiles(userId);
     }
 
 }

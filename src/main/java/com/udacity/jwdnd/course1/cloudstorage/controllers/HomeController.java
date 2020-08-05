@@ -29,10 +29,11 @@ public class HomeController {
 
         String username = authentication.getName();
         User user = userService.getUser(username);
+        Integer userId = user.getUserId();
 
-        model.addAttribute("notes", this.noteService.getNotes(user.getUserId()));
-        model.addAttribute("credentials", this.credentialService.getCredentials());
-        model.addAttribute("files", this.fileService.getFiles());
+        model.addAttribute("notes", this.noteService.getNotes(userId));
+        model.addAttribute("credentials", this.credentialService.getCredentials(userId));
+        model.addAttribute("files", this.fileService.getFiles(userId));
         return "home";
     }
 
