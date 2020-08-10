@@ -32,7 +32,7 @@ public class NoteController {
         return "home";
     }
 
-    @GetMapping("/delete/{noteId}")
+    @GetMapping("/deleteNote/{noteId}")
     public String deleteNote(@PathVariable(value = "noteId") Integer noteId, @ModelAttribute Note note, Authentication authentication, Model model) {
         this.noteService.deleteNote(noteId);
 
