@@ -38,19 +38,28 @@ public class FilesController {
         String username = auth.getName();
         User user = userService.getUser(username);
         Integer userId = user.getUserId();
+        String fileUploadError = null;
 
-        try {
-            fileMapper.insert(new Files(null,
-                    fileUpload.getOriginalFilename(),
-                    fileUpload.getContentType(),
-                    fileUpload.getSize(),
-                    userId,
-                    fileUpload.getBytes()
-            ));
+        if (this.fileService.isFileNameAvailable(fileUpload, userId)) {
+            try {
+                fileMapper.insert(new Files(null,
+                        fileUpload.getOriginalFilename(),
+                        fileUpload.getContentType(),
+                        fileUpload.getSize(),
+                        userId,
+                        fileUpload.getBytes()
+                ));
+                model.addAttribute("fileUploadSuccess", "File successfully uploaded.");
+                return "home";
+            } catch (Exception e) {
+                e.printStackTrace();
+                fileUploadError = e.toString();
+                model.addAttribute("fileError", fileUploadError);
+                return "home";
+            }
+        } else {
+            model.addAttribute("fileError", "File name already used");
             model.addAttribute("files", fileMapper.getFiles(userId));
-            return "home";
-        } catch (Exception e) {
-            e.printStackTrace();
             return "home";
         }
     }

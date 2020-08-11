@@ -29,10 +29,10 @@ public class NotesSection {
     @FindBy(id = "save-note")
     private WebElement saveNote;
 
-    @FindBy(id = "edit-credential")
+    @FindBy(id = "edit-note")
     private WebElement editNote;
 
-    @FindBy(id = "delete-credential")
+    @FindBy(id = "delete-note")
     private WebElement deleteNote;
 
     private final JavascriptExecutor js;
@@ -71,31 +71,8 @@ public class NotesSection {
     }
 
 
-
-
 //    -------------------------
 
-
-    public WebElement openNoteTab() {
-//        this.notesTabField.click();
-        return this.notesTabField;
-    }
-
-    public void openNoteModal() {
-        this.addNote.click();
-    }
-
-    public void createNote(String title, String description) {
-        this.noteTitleField.sendKeys(title);
-        this.noteDescriptionField.sendKeys(description);
-//        this.saveNote.click();
-    }
-
-    public void saveNote() {
-//        this.noteTitleField.sendKeys(title);
-//        this.noteDescriptionField.sendKeys(description);
-        this.saveNote.click();
-    }
 
     public String getCreatedNoteTitle() {
         return this.displayedNoteTitle.getText();

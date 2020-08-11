@@ -9,29 +9,32 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class CredentialsSection {
 
-    @FindBy(css = "#nav-credentials")
+    @FindBy(id = "nav-credentials-tab")
     private WebElement credentialsTabField;
 
     @FindBy(css = "#add-credential")
-    private WebElement addNote;
+    private WebElement addCredential;
 
-    @FindBy(css = "#note-title")
-    private WebElement noteTitleField;
+    @FindBy(css = "#credential-url")
+    private WebElement credentialUrlField;
 
-    @FindBy(css = "#note-description")
-    private WebElement noteDescriptionField;
+    @FindBy(css = "#credential-username")
+    private WebElement credentialUsernameField;
 
-    @FindBy(css = ".note-title-displayed")
-    private WebElement displayedNoteTitle;
+    @FindBy(css = "#credential-password")
+    private WebElement credentialPasswordField;
 
-    @FindBy(id = "save-note")
-    private WebElement saveNote;
+//    @FindBy(css = ".note-title-displayed")
+//    private WebElement displayedNoteTitle;
 
-    @FindBy(id = "edit-note")
-    private WebElement editNote;
+    @FindBy(id = "save-credential")
+    private WebElement saveCredential;
 
-    @FindBy(id = "delete-note")
-    private WebElement deleteNote;
+    @FindBy(id = "edit-credential")
+    private WebElement editCredential;
+
+    @FindBy(id = "delete-credential")
+    private WebElement deleteCredential;
 
     private final JavascriptExecutor js;
     private final WebDriverWait wait;
@@ -40,6 +43,32 @@ public class CredentialsSection {
         PageFactory.initElements(webDriver, this);
         wait = new WebDriverWait(webDriver, 1000);
         js = (JavascriptExecutor) webDriver;
+    }
+
+    public void openCredentialTab() {
+        js.executeScript("arguments[0].click();", credentialsTabField);
+    }
+
+    public void openCredentialModal() {
+        js.executeScript("arguments[0].click();", addCredential);
+    }
+
+    public void createCredential(String url, String username, String password) {
+        js.executeScript("arguments[0].value='" + url + "';", credentialUrlField);
+        js.executeScript("arguments[0].value='" + username + "';", credentialUsernameField);
+        js.executeScript("arguments[0].value='" + password + "';", credentialPasswordField);
+    }
+
+    public void saveCredential() {
+        js.executeScript("arguments[0].click();", saveCredential);
+    }
+
+    public void editCredential() {
+        js.executeScript("arguments[0].click();", editCredential);
+    }
+
+    public void deleteCredential() {
+        js.executeScript("arguments[0].click();", deleteCredential);
     }
 
 }

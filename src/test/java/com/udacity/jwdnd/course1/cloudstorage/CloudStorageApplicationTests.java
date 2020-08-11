@@ -37,15 +37,6 @@ class CloudStorageApplicationTests {
 	@BeforeEach
 	public void beforeEach() {
 		this.driver = new ChromeDriver();
-
-		username = "Test";
-			password = "testPassword";
-			driver.get("http://localhost:" + port + "/signup");
-			SignupPage signupPage = new SignupPage(driver);
-			signupPage.signup("Russell", "Westbrook", username, password);
-			driver.get("http://localhost:" + port + "/login");
-			LoginPage loginPage = new LoginPage(driver);
-			loginPage.login(username, password);
 	}
 
 	@AfterEach
@@ -53,6 +44,17 @@ class CloudStorageApplicationTests {
 		if (this.driver != null) {
 			driver.quit();
 		}
+	}
+
+	public void setUp() {
+		username = "Test";
+		password = "testPassword";
+		driver.get("http://localhost:" + port + "/signup");
+		SignupPage signupPage = new SignupPage(driver);
+		signupPage.signup("Russell", "Westbrook", username, password);
+		driver.get("http://localhost:" + port + "/login");
+		LoginPage loginPage = new LoginPage(driver);
+		loginPage.login(username, password);
 	}
 
 	@Test
@@ -63,6 +65,7 @@ class CloudStorageApplicationTests {
 		notesSection.createNoteJS("test JS", "test Description");
 		notesSection.saveNoteJS();
 		notesSection.openNoteTabJS();
+		Thread.sleep(50000);
 	}
 
 	@Test
@@ -90,6 +93,43 @@ class CloudStorageApplicationTests {
 		notesSection.openNoteTabJS();
 		notesSection.deleteNoteJS();
 		notesSection.openNoteTabJS();
+	}
+
+	@Test
+	public void createCredentialTest() throws InterruptedException {
+		CredentialsSection credentialsSection = new CredentialsSection(driver);
+		credentialsSection.openCredentialTab();
+		credentialsSection.openCredentialModal();
+		credentialsSection.createCredential("test URL", "testUsername", "testPassword");
+		credentialsSection.saveCredential();
+		credentialsSection.openCredentialTab();
+	}
+
+	@Test
+	public void editCredentialTest() throws InterruptedException {
+		CredentialsSection credentialsSection = new CredentialsSection(driver);
+		credentialsSection.openCredentialTab();
+		credentialsSection.openCredentialModal();
+		credentialsSection.createCredential("test URL", "testUsername", "testPassword");
+		credentialsSection.saveCredential();
+		credentialsSection.openCredentialTab();
+		credentialsSection.editCredential();
+		credentialsSection.createCredential("test URL edited", "testUsername edited", "testPassword edited");
+		credentialsSection.saveCredential();
+		credentialsSection.openCredentialTab();
+		Thread.sleep(50000);
+	}
+
+	@Test
+	public void deleteCredentialTest() throws InterruptedException {
+		CredentialsSection credentialsSection = new CredentialsSection(driver);
+		credentialsSection.openCredentialTab();
+		credentialsSection.openCredentialModal();
+		credentialsSection.createCredential("test URL", "testUsername", "testPassword");
+		credentialsSection.saveCredential();
+		credentialsSection.openCredentialTab();
+		credentialsSection.deleteCredential();
+		credentialsSection.openCredentialTab();
 	}
 
 
