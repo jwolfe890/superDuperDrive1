@@ -41,7 +41,7 @@ class CloudStorageApplicationTests {
 		password = "testPassword";
 		driver.get("http://localhost:" + port + "/signup");
 		SignupPage signupPage = new SignupPage(driver);
-		signupPage.signup("Russell", "Westbrook", username, password);
+		signupPage.signup("Michael", "Jordan", username, password);
 		driver.get("http://localhost:" + port + "/login");
 		LoginPage loginPage = new LoginPage(driver);
 		loginPage.login(username, password);

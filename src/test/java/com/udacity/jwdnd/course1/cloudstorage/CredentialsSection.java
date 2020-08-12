@@ -24,9 +24,6 @@ public class CredentialsSection {
     @FindBy(css = "#credential-password")
     private WebElement credentialPasswordField;
 
-//    @FindBy(css = ".note-title-displayed")
-//    private WebElement displayedNoteTitle;
-
     @FindBy(id = "save-credential")
     private WebElement saveCredential;
 
